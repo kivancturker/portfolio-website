@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, IconButton } from "@radix-ui/themes";
+import { IconButton } from "@radix-ui/themes";
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -31,7 +31,16 @@ function ThemeButton({
 }) {
   return (
     <IconButton
+      size="1"
       variant="ghost"
+      color="gray"
+      className="transition-colors duration-300 ease-in-out"
+      style={{
+        width: "32px",
+        height: "var(--base-button-height)",
+        minWidth: "32px",
+        minHeight: "var(--base-button-height)",
+      }}
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
       {theme === "light" ? <Sun /> : <Moon />}
