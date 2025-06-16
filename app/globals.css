@@ -20,6 +20,16 @@
   }
 }
 
+.dark {
+  --background: oklch(21% 0.034 264.665);
+  --foreground: oklch(87.2% 0.01 258.338);
+}
+
+.light {
+  --background: oklch(96.8% 0.007 247.896);
+  --foreground: oklch(27.8% 0.033 256.848);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
