@@ -1,4 +1,4 @@
-import { Header, TechStackCard } from "@/components";
+import { Header, TechStackCard, Footer } from "@/components";
 import { Button } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -80,11 +80,7 @@ export default function Home() {
           <TechStackCard title="DevOps" techArray={techStack.devops} />
         </div>
       </section>
-      <footer className="mt-24 mb-4 mx-16">
-        <p className="text-center text-lg">
-          &copy; {new Date().getFullYear()} Kivanc Turker. All rights reserved.
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }
