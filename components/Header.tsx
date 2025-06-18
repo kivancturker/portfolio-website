@@ -7,7 +7,6 @@ export const Header = () => {
     <header className="flex justify-between items-center p-4 mx-16">
       <Logo />
       <div className="flex items-center">
-        <NavButton name="Home" path="/" />
         <NavButton name="Project" path="/project" />
         <NavButton name="Blog" path="/blog" />
         <NavButton name="About" path="/about" />
