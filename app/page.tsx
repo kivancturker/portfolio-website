@@ -60,6 +60,19 @@ export default function Home() {
           />
         </div>
       </section>
+      <section id="about" className="mt-24 mx-16">
+        <h2 className="text-center text-2xl font-bold mb-4">About Me</h2>
+        <p className="text-lg/tight">
+          I&apos;m a software engineer with a passion for building web
+          applications. I&apos;m a software engineer with a passion for building
+          web applications. I&apos;m a software engineer with a passion for
+          building web applications. I&apos;m a software engineer with a passion
+          for building web applications. I&apos;m a software engineer with a
+          passion for building web applications. I&apos;m a software engineer
+          with a passion for building web applications. I&apos;m a software
+          engineer with a passion for building web applications.
+        </p>
+      </section>
     </>
   );
 }
