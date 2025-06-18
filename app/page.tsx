@@ -1,14 +1,13 @@
-import { Header } from "@/components";
+import { Header, TechStackCard } from "@/components";
 import { Button } from "@radix-ui/themes";
 import Image from "next/image";
-import { Github, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
-
-const socialLinks = {
-  github: "https://github.com/kivancturker",
-  linkedin: "https://www.linkedin.com/in/kivancturker/",
-  x: "https://x.com/IAmKivancTurker",
-};
+import {
+  LinkedInLogoIcon,
+  GitHubLogoIcon,
+  TwitterLogoIcon,
+} from "@radix-ui/react-icons";
+import { techStack, socialLinks } from "@/data";
 
 export default function Home() {
   return (
@@ -33,17 +32,17 @@ export default function Home() {
             </Button>
             <div id="social-buttons" className="flex gap-2">
               <SocialButton
-                icon={<Github size={25} />}
+                icon={<GitHubLogoIcon width={25} height={25} />}
                 alt="GitHub"
                 url={socialLinks.github}
               />
               <SocialButton
-                icon={<Linkedin size={25} />}
+                icon={<LinkedInLogoIcon width={25} height={25} />}
                 alt="LinkedIn"
                 url={socialLinks.linkedin}
               />
               <SocialButton
-                icon={<Twitter size={25} />}
+                icon={<TwitterLogoIcon width={25} height={25} />}
                 alt="X (Twitter)"
                 url={socialLinks.x}
               />
@@ -72,6 +71,14 @@ export default function Home() {
           with a passion for building web applications. I&apos;m a software
           engineer with a passion for building web applications.
         </p>
+      </section>
+      <section id="tech-stack" className="mt-24 mx-16">
+        <h2 className="text-center text-2xl font-bold mb-4">Tech Stack</h2>
+        <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
+          <TechStackCard title="Frontend" techArray={techStack.frontend} />
+          <TechStackCard title="Backend" techArray={techStack.backend} />
+          <TechStackCard title="DevOps" techArray={techStack.devops} />
+        </div>
       </section>
       <footer className="mt-24 mb-4 mx-16">
         <p className="text-center text-lg">
