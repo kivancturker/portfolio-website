@@ -1,4 +1,4 @@
-import { Header, TechStackCard, Footer } from "@/components";
+import { Header, TechStackCard, Footer, SocialButton } from "@/components";
 import { Button } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,11 +18,16 @@ export default function Home() {
         className="grid grid-cols-2 items-center justify-between mx-16"
       >
         <div id="left-side">
-          <h1 className="text-4xl font-bold">Hello, I&apos;m Kivanc</h1>
-          <p className="text-lg">
-            I&apos;m a software engineer with a passion for building web
-            applications.
-          </p>
+          <div id="hero-text" className="mb-8">
+            <h1 className="text-4xl font-bold mb-2">
+              From Concept to Code, I Build Solutions for Your Business.
+            </h1>
+            <p className="text-xl dark:text-gray-300 text-gray-700">
+              My name is Kivanc. I&apos;m a Full Stack Developer who architects
+              and develops scalable software to overcome your technical
+              challenges.
+            </p>
+          </div>
           <div
             id="cta-button-group"
             className="flex items-center gap-8 mt-4 mr-16"
@@ -82,28 +87,5 @@ export default function Home() {
       </section>
       <Footer />
     </>
-  );
-}
-
-function SocialButton({
-  icon,
-  alt,
-  url,
-}: {
-  icon: React.ReactNode;
-  alt: string;
-  url: string;
-}) {
-  return (
-    <a
-      className="border border-gray-300 dark:border-gray-600 rounded-md p-2 
-      hover:bg-gray-100 dark:hover:bg-gray-800 hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out"
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={alt}
-    >
-      {icon}
-    </a>
   );
 }
