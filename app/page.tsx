@@ -13,13 +13,18 @@ export default function Home() {
   return (
     <>
       <Header />
+
+      {/* Hero Section */}
       <section
         id="hero"
-        className="grid grid-cols-2 items-center justify-between mx-16"
+        className="grid grid-cols-2 items-center justify-between"
       >
         <div id="left-side">
           <div id="hero-text" className="mb-8">
-            <h1 className="text-4xl font-bold mb-2">
+            <h1
+              className="text-4xl font-bold mb-2 text-[var(--important-text-1)] [--important-text-1:theme(colors.gray.800)]
+              dark:[--important-text-1:theme(colors.gray.200)]"
+            >
               From Concept to Code, I Build Solutions for Your Business.
             </h1>
             <p className="text-xl dark:text-gray-300 text-gray-700">
@@ -64,21 +69,82 @@ export default function Home() {
           />
         </div>
       </section>
-      <section id="about" className="mt-24 mx-16">
-        <h2 className="text-center text-2xl font-bold mb-4">About Me</h2>
-        <p className="text-lg/tight">
-          I&apos;m a software engineer with a passion for building web
-          applications. I&apos;m a software engineer with a passion for building
-          web applications. I&apos;m a software engineer with a passion for
-          building web applications. I&apos;m a software engineer with a passion
-          for building web applications. I&apos;m a software engineer with a
-          passion for building web applications. I&apos;m a software engineer
-          with a passion for building web applications. I&apos;m a software
-          engineer with a passion for building web applications.
-        </p>
+
+      {/* About Me Section */}
+      <section id="about" className="mt-24">
+        <div
+          id="about-me-container"
+          className="grid grid-cols-2 gap-4 h-[400px]"
+        >
+          <ol
+            id="services-part"
+            className="relative ml-[calc(var(--common-margin)/2)] [--service-icon-padding:1rem] flex flex-col justify-between border-l-2 border-gray-300 dark:border-gray-700 
+              [--service-icon-size:50px] [--text-margin:calc(var(--service-icon-size)/2-var(--text-lg)/2+var(--service-icon-padding)/2)]"
+          >
+            <li className="mb-10 ms-6">
+              <span className="absolute flex items-center justify-center py-[var(--service-icon-padding)] -start-[calc(var(--service-icon-size)/2)] bg-[var(--background))]">
+                <ServiceIcon
+                  iconPathLight="/icons/webdev.svg"
+                  iconPathDark="/icons/webdev-dark.svg"
+                  title="Web Development"
+                />
+              </span>
+              <p className="text-xl font-semibold ml-8 mt-[var(--text-margin)]">
+                Web Development
+              </p>
+            </li>
+            <li className="mb-10 ms-6">
+              <span className="absolute flex items-center justify-center py-[var(--service-icon-padding)] -start-[calc(var(--service-icon-size)/2)] bg-[var(--background)]">
+                <ServiceIcon
+                  iconPathLight="/icons/mobiledev.svg"
+                  iconPathDark="/icons/mobiledev-dark.svg"
+                  title="Mobile Development"
+                />
+              </span>
+              <p className="text-xl font-semibold ml-8 mt-[var(--text-margin)]">
+                Mobile Development
+              </p>
+            </li>
+            <li className="mb-10 ms-6">
+              <span className="absolute flex items-center justify-center py-[var(--service-icon-padding)] -start-[calc(var(--service-icon-size)/2)] bg-[var(--background)]">
+                <ServiceIcon
+                  iconPathLight="/icons/deploy.svg"
+                  iconPathDark="/icons/deploy-dark.svg"
+                  title="DevOps"
+                />
+              </span>
+              <p className="text-xl font-semibold ml-8 mt-[var(--text-margin)]">
+                DevOps
+              </p>
+            </li>
+          </ol>
+          <div id="about-me" className="">
+            <h2 className="text-center text-3xl font-bold mb-2">About Me</h2>
+            <p className="text-lg/snug mb-2">
+              Hello! I&apos;m Kıvanç, a software engineer with a passion for
+              building innovative and valuable products. I&apos;ve had the
+              pleasure of working in various industries, including banking and
+              consultancy.
+            </p>
+            <p className="text-lg/snug mb-2">
+              Currently, I&apos;m working as a freelance software developer,
+              helping clients bring their ideas to life. In my spare time,
+              I&apos;m working on my projects. I&apos;m proficient in multiple
+              programming languages, with a current focus on JavaScript and
+              TypeScript. My preferred front-end framework is React, and for the
+              backend, I enjoy working with Express.js.
+            </p>
+            <p className="text-lg/snug mb-2">
+              My ultimate goal is to become a successful technology
+              entrepreneur. I&apos;m constantly striving to improve myself.
+            </p>
+          </div>
+        </div>
       </section>
-      <section id="tech-stack" className="mt-24 mx-16">
-        <h2 className="text-center text-2xl font-bold mb-4">Tech Stack</h2>
+
+      {/* Tech Stack Section */}
+      <section id="tech-stack" className="mt-24">
+        <h2 className="text-center text-4xl font-bold mb-4">Tech Stack</h2>
         <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
           <TechStackCard title="Frontend" techArray={techStack.frontend} />
           <TechStackCard title="Backend" techArray={techStack.backend} />
@@ -86,6 +152,37 @@ export default function Home() {
         </div>
       </section>
       <Footer />
+    </>
+  );
+}
+
+function ServiceIcon({
+  iconPathLight,
+  iconPathDark,
+  title,
+}: {
+  iconPathLight: string;
+  iconPathDark: string;
+  title: string;
+}) {
+  return (
+    <>
+      <Image
+        src={iconPathDark}
+        alt={title}
+        width={50}
+        height={50}
+        color="white"
+        className="hidden dark:block"
+      />
+      <Image
+        src={iconPathLight}
+        alt={title}
+        width={50}
+        height={50}
+        color="black"
+        className="dark:hidden"
+      />
     </>
   );
 }

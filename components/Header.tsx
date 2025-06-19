@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export const Header = () => {
   return (
-    <header className="flex justify-between items-center p-4 mx-16">
+    <header className="flex justify-between items-center p-4">
       <Logo />
       <div className="flex items-center">
         <NavButton name="Project" path="/project" />
