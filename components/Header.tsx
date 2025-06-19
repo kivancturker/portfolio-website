@@ -1,3 +1,4 @@
+import React from "react";
 import { Logo } from "./Logo";
 import { ThemeSwitch } from "./ThemeSwitch";
 import Link from "next/link";

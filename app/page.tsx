@@ -1,5 +1,8 @@
-import { Header, TechStackCard, Footer, SocialButton } from "@/components";
-import { Button } from "@radix-ui/themes";
+import { Header } from "@/components/Header";
+import { TechStackCard } from "@/components/TechStackCard";
+import { Footer } from "@/components/Footer";
+import { SocialButton } from "@/components/SocialButton";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -37,7 +40,7 @@ export default function Home() {
             id="cta-button-group"
             className="flex items-center gap-8 mt-4 mr-16"
           >
-            <Button size="3">
+            <Button size="lg">
               <Link href="/contact">Contact Me</Link>
             </Button>
             <div id="social-buttons" className="flex gap-2">
@@ -145,7 +148,7 @@ export default function Home() {
       {/* Tech Stack Section */}
       <section id="tech-stack" className="mt-24">
         <h2 className="text-center text-4xl font-bold mb-4">Tech Stack</h2>
-        <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1  lg:grid-cols-3 gap-4">
           <TechStackCard title="Frontend" techArray={techStack.frontend} />
           <TechStackCard title="Backend" techArray={techStack.backend} />
           <TechStackCard title="DevOps" techArray={techStack.devops} />
