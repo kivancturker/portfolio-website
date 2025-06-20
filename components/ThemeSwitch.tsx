@@ -3,18 +3,15 @@
 import { IconButton } from "@radix-ui/themes";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useMounted } from "@/hooks/use-mounted";
 
 export const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useMounted();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // useEffect only runs on the client, so now we can safely show the UI
+  // useEffect only runs on the client, so now we can safely show the UI.
+  // This is a workaround to avoid hydration errors.
   if (!mounted) {
     return null;
   }
