@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 

@@ -119,7 +119,7 @@
 body {
   font-family: var(--font-nunito), sans-serif;
   --common-margin: 4rem;
-  margin: 0 var(--common-margin);
+  /* margin: 0 var(--common-margin); */
 }
 
 /* Ensure Nunito is used throughout the app */

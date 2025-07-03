@@ -1,6 +1,6 @@
 "use client";
 
-import { IconButton } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
 
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
@@ -27,20 +27,17 @@ function ThemeButton({
   setTheme: (theme: string) => void;
 }) {
   return (
-    <IconButton
-      size="1"
+    <Button
       variant="ghost"
-      color="gray"
-      className="transition-colors duration-300 ease-in-out"
-      style={{
-        width: "32px",
-        height: "var(--base-button-height)",
-        minWidth: "32px",
-        minHeight: "var(--base-button-height)",
-      }}
+      size="icon"
+      className="size-8 rounded-sm transition-colors duration-300 ease-in-out"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {theme === "light" ? <Sun /> : <Moon />}
-    </IconButton>
+      {theme === "light" ? (
+        <Sun className="text-[var(--color-primary)]" />
+      ) : (
+        <Moon className="text-[var(--color-primary)]" />
+      )}
+    </Button>
   );
 }
