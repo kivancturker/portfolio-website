@@ -20,17 +20,17 @@ export default function Home() {
         {/* Hero Section */}
         <section
           id="hero"
-          className="grid grid-cols-2 items-center justify-between"
+          className="grid md:grid-cols-2 items-center justify-between"
         >
           <div id="left-side">
             <div id="hero-text" className="mb-8">
               <h1
-                className="text-4xl font-bold mb-2 text-[var(--important-text-1)] [--important-text-1:theme(colors.gray.800)]
+                className="text-4xl text-center md:text-start mt-8 font-bold mb-2 text-[var(--important-text-1)] [--important-text-1:theme(colors.gray.800)]
               dark:[--important-text-1:theme(colors.gray.200)]"
               >
                 From Concept to Code, I Build Solutions for Your Business.
               </h1>
-              <p className="text-xl dark:text-gray-300 text-gray-700">
+              <p className="text-xl text-center md:text-start mb-4 dark:text-gray-300 text-gray-700">
                 My name is Kivanc. I&apos;m a Full Stack Developer who
                 architects and develops scalable software to overcome your
                 technical challenges.
@@ -38,7 +38,7 @@ export default function Home() {
             </div>
             <div
               id="cta-button-group"
-              className="flex items-center gap-8 mt-4 mr-16"
+              className="flex justify-center md:justify-start items-center gap-8 mt-4 mr-16"
             >
               <Button size="lg">
                 <Link href="/contact">Contact Me</Link>
@@ -62,7 +62,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div id="right-side" className="grid justify-center items-center">
+          <div
+            id="right-side"
+            className="hidden md:grid justify-center items-center"
+          >
             <Image
               className="hover:scale-105 transition-all duration-400"
               src="/images/myphoto.png"
