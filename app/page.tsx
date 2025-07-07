@@ -80,11 +80,11 @@ export default function Home() {
         <section id="about" className="mt-24">
           <div
             id="about-me-container"
-            className="grid grid-cols-2 gap-4 h-[400px]"
+            className="md:grid grid-cols-2 gap-4 h-[400px]"
           >
             <ol
               id="services-part"
-              className="relative ml-[calc(var(--common-margin)/2)] [--service-icon-padding:1rem] flex flex-col justify-between border-l-2 border-gray-300 dark:border-gray-700 
+              className="relative ml-[calc(var(--common-margin)/2)] [--service-icon-padding:1rem] hidden md:flex flex-col justify-between border-l-2 border-gray-300 dark:border-gray-700 
               [--service-icon-size:50px] [--text-margin:calc(var(--service-icon-size)/2-var(--text-lg)/2+var(--service-icon-padding)/2)]"
             >
               <li className="mb-10 ms-6">
