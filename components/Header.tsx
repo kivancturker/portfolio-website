@@ -29,16 +29,17 @@ export const Header = () => {
     <header className="flex justify-between items-center pt-4 mx-4 md:mx-[var(--common-margin)]">
       <Logo />
       <div className="flex items-center">
-        <div
-          id="nav-buttons--desktop"
-          className={isMobile ? "hidden" : "block"}
-        >
-          {navLinks.map((link) => (
-            <NavButton key={link.name} name={link.name} path={link.path} />
-          ))}
+        <div className="mr-2">
+          <div
+            id="nav-buttons--desktop"
+            className={isMobile ? "hidden" : "block"}
+          >
+            {navLinks.map((link) => (
+              <NavButton key={link.name} name={link.name} path={link.path} />
+            ))}
+          </div>
+          <MobileNavButton />
         </div>
-
-        <MobileNavButton />
         <ThemeSwitch />
       </div>
     </header>
@@ -54,11 +55,13 @@ const HamburgerMenuButton = React.forwardRef<
     variant="outline"
     size="icon"
     className={cn(
-      "size-8 rounded-sm flex justify-center items-center md:hidden",
+      "size-8 rounded-sm flex justify-center items-center md:hidden relative",
       className
     )}
     {...props}
   >
+    {/* WCAG reccommended size for buttons, but instead of increasing the size just added the span */}
+    <span className="absolute size-11" />
     <Menu className="size-6" />
   </Button>
 ));
