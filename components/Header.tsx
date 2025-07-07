@@ -89,7 +89,7 @@ function NavButton({ name, path }: { name: string; path: string }) {
   return (
     <Link
       href={path}
-      className="text-3xlg text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 px-4 py-1 rounded-sm transition-colors duration-300 ease-in-out"
+      className="text-3xlg text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-200 px-4 py-1 rounded-sm"
     >
       {name}
     </Link>

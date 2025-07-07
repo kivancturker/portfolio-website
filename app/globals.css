@@ -145,3 +145,16 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+a {
+  @apply transition-colors duration-300 ease-in-out;
+}
