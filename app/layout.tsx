@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import "@radix-ui/themes/styles.css";
 import "./globals.css";
-import { Theme } from "@radix-ui/themes";
-import { ThemeProvider } from "next-themes";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -23,15 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${nunito.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark">
-          <Theme
-            accentColor="blue"
-            grayColor="slate"
-            hasBackground={false}
-            className="font-sans"
-          >
-            {children}
-          </Theme>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          {children}
         </ThemeProvider>
       </body>
     </html>

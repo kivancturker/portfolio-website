@@ -1,20 +1,17 @@
 "use client";
 
-import { IconButton } from "@radix-ui/themes";
+import { Button } from "@/components/ui/button";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useMounted } from "@/hooks/use-mounted";
 
 export const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useMounted();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // useEffect only runs on the client, so now we can safely show the UI
+  // useEffect only runs on the client, so now we can safely show the UI.
+  // This is a workaround to avoid hydration errors.
   if (!mounted) {
     return null;
   }
@@ -30,20 +27,17 @@ function ThemeButton({
   setTheme: (theme: string) => void;
 }) {
   return (
-    <IconButton
-      size="1"
+    <Button
       variant="ghost"
-      color="gray"
-      className="transition-colors duration-300 ease-in-out"
-      style={{
-        width: "32px",
-        height: "var(--base-button-height)",
-        minWidth: "32px",
-        minHeight: "var(--base-button-height)",
-      }}
+      size="icon"
+      className="size-8 rounded-sm transition-colors duration-300 ease-in-out"
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
     >
-      {theme === "light" ? <Sun /> : <Moon />}
-    </IconButton>
+      {theme === "light" ? (
+        <Sun className="text-[var(--color-primary)]" />
+      ) : (
+        <Moon className="text-[var(--color-primary)]" />
+      )}
+    </Button>
   );
 }
