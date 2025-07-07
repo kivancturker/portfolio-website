@@ -60,7 +60,10 @@ function BlogPost({ content }: { content: BlogContent }) {
           </div>
           <div>
             <Link
-              href={"/blog/" + content.slug}
+              href={{
+                pathname: "/blog/" + content.slug,
+                query: { title: content.title },
+              }}
               className="font-bold text-xl hover:underline hover:underline-offset-2 dark:hover:text-gray-300"
             >
               {content.title}
