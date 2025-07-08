@@ -11,7 +11,7 @@ export async function generateMetadata({
   };
 }
 
-function Page() {
+async function Page() {
   return <div>Page</div>;
 }
 

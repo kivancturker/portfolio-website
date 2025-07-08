@@ -26,7 +26,7 @@ const blogs: BlogContent[] = [
   },
 ];
 
-function Page() {
+async function Page() {
   return (
     <div className="mx-4 md:mx-[var(--common-margin)] mt-8">
       <h1 className="text-2xl font-bold mb-4">Blog Posts</h1>
