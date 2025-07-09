@@ -4,27 +4,7 @@ import { BlogContent } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-const blogs: BlogContent[] = [
-  {
-    title: "Understanding React Server Components",
-    releaseDate: "2025-07-05",
-    slug: "react-server-components",
-    tags: ["react", "nextjs", "javascript"],
-  },
-  {
-    title: "Why Type Safety Matters in Node.js",
-    releaseDate: "2025-06-25",
-    slug: "type-safety-nodejs",
-    tags: ["typescript", "nodejs", "best-practices"],
-  },
-  {
-    title: "Optimizing PostgreSQL Queries for Performance",
-    releaseDate: "2025-06-15",
-    slug: "postgresql-query-optimization",
-    tags: ["postgresql", "database", "performance"],
-  },
-];
+import { blogs } from "@/data";
 
 async function Page() {
   return (
@@ -46,7 +26,7 @@ function BlogPost({ content }: { content: BlogContent }) {
         <div className="flex gap-4 items-center">
           <div
             id="img-container"
-            className="min-w-24 min-h-24 rounded-lg overflox-hidden bg-secondary flex items-center justify-center"
+            className="min-w-24 min-h-24 rounded-lg overflow-hidden bg-secondary flex items-center justify-center"
           >
             {content.imageUrl ? (
               <Image
@@ -56,20 +36,23 @@ function BlogPost({ content }: { content: BlogContent }) {
                 height={96}
                 className="object-cover w-full h-full"
               />
-            ) : null}
+            ) : (
+              <div className="text-muted-foreground text-sm">No image</div>
+            )}
           </div>
           <div>
             <Link
-              href={{
-                pathname: "/blog/" + content.slug,
-                query: { title: content.title },
-              }}
+              href={`/blog/${content.slug}`}
               className="font-bold text-xl hover:underline hover:underline-offset-2 dark:hover:text-gray-300"
             >
               {content.title}
             </Link>
             <p className="text-gray-700 dark:text-gray-300">
-              {content.releaseDate}
+              {new Date(content.releaseDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               {content.tags.map((tag) => (
