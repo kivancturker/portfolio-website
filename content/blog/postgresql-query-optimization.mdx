@@ -1,0 +1,236 @@
+---
+title: Optimizing PostgreSQL Queries for Performance
+slug: postgresql-query-optimization
+releaseDate: 2025-06-15
+tags: ["postgresql", "database", "performance"]
+imageUrl: /images/blog/postgresql-cover.png
+---
+
+# Optimizing PostgreSQL Queries for Performance
+
+<DateText date="2025-06-15" />
+
+<Callout variant="info">
+  PostgreSQL is incredibly powerful, but without proper optimization, even the
+  most robust queries can become performance bottlenecks. Let's explore proven
+  strategies to make your queries lightning fast.
+</Callout>
+
+## Understanding Query Performance
+
+Before optimizing, you need to understand how PostgreSQL executes your queries. The `EXPLAIN` command is your best friend:
+
+<CodeBlock lang="sql">{`
+EXPLAIN ANALYZE
+SELECT u.name, COUNT(p.id) as post_count
+FROM users u
+LEFT JOIN posts p ON u.id = p.user_id
+WHERE u.created_at > '2024-01-01'
+GROUP BY u.id, u.name
+ORDER BY post_count DESC;
+`}</CodeBlock>
+
+## Common Performance Issues
+
+### 1. Missing Indexes
+
+The most common cause of slow queries is missing or inappropriate indexes:
+
+<CodeBlock lang="sql">{`
+-- Slow: Full table scan
+SELECT * FROM users WHERE email = 'user@example.com';
+
+-- Fast: With index
+CREATE INDEX idx_users_email ON users(email);
+SELECT \* FROM users WHERE email = 'user@example.com';
+`}</CodeBlock>
+
+### 2. N+1 Query Problem
+
+<Callout variant="warning">
+  The N+1 problem occurs when you fetch a list of records and then make
+  additional queries for each record.
+</Callout>
+
+<CodeBlock lang="sql">{`
+-- Bad: N+1 queries
+SELECT * FROM users;
+-- Then for each user:
+SELECT * FROM posts WHERE user_id = ?;
+
+-- Good: Single optimized query
+SELECT
+u.\*,
+COALESCE(
+JSON_AGG(
+JSON_BUILD_OBJECT(
+'id', p.id,
+'title', p.title,
+'content', p.content
+)
+) FILTER (WHERE p.id IS NOT NULL),
+'[]'
+) as posts
+FROM users u
+LEFT JOIN posts p ON u.id = p.user_id
+GROUP BY u.id;
+`}</CodeBlock>
+
+## Index Optimization Strategies
+
+### 1. Composite Indexes
+
+Order matters in composite indexes:
+
+<CodeBlock lang="sql">{`
+-- If you frequently query by status and created_at
+CREATE INDEX idx_posts_status_created ON posts(status, created_at);
+
+-- This index can serve queries like:
+SELECT _ FROM posts WHERE status = 'published';
+SELECT _ FROM posts WHERE status = 'published' AND created_at > '2024-01-01';
+
+-- But NOT efficiently:
+SELECT \* FROM posts WHERE created_at > '2024-01-01'; -- Missing status
+`}</CodeBlock>
+
+### 2. Partial Indexes
+
+Save space and improve performance with partial indexes:
+
+<CodeBlock lang="sql">{`
+-- Only index published posts
+CREATE INDEX idx_posts_published_created 
+ON posts(created_at) 
+WHERE status = 'published';
+
+-- Much smaller than indexing all posts
+-- Perfect for queries on published content
+`}</CodeBlock>
+
+## Query Writing Best Practices
+
+### 1. Use LIMIT Wisely
+
+<CodeBlock lang="sql">{`
+-- Instead of fetching everything and limiting in application
+SELECT * FROM posts ORDER BY created_at DESC LIMIT 10;
+
+-- Use OFFSET carefully (it's slow for large offsets)
+-- Better: Use cursor-based pagination
+SELECT \* FROM posts
+WHERE created_at < ?last_created_at
+ORDER BY created_at DESC
+LIMIT 10;
+`}</CodeBlock>
+
+### 2. Avoid SELECT \*
+
+<CodeBlock lang="sql">{`
+-- Bad: Fetches unnecessary data
+SELECT * FROM users JOIN profiles ON users.id = profiles.user_id;
+
+-- Good: Only select what you need
+SELECT u.id, u.name, p.bio
+FROM users u
+JOIN profiles p ON u.id = p.user_id;
+`}</CodeBlock>
+
+## Advanced Optimization Techniques
+
+### 1. Window Functions vs Subqueries
+
+<CodeBlock lang="sql">{`
+-- Instead of correlated subqueries
+SELECT 
+  id,
+  name,
+  (SELECT COUNT(*) FROM posts WHERE user_id = u.id) as post_count
+FROM users u;
+
+-- Use window functions
+SELECT DISTINCT
+u.id,
+u.name,
+COUNT(p.id) OVER (PARTITION BY u.id) as post_count
+FROM users u
+LEFT JOIN posts p ON u.id = p.user_id;
+`}</CodeBlock>
+
+### 2. Materialized Views for Complex Aggregations
+
+<CodeBlock lang="sql">{`
+-- For expensive aggregations that don't need real-time data
+CREATE MATERIALIZED VIEW user_stats AS
+SELECT 
+  u.id,
+  u.name,
+  COUNT(p.id) as post_count,
+  AVG(p.view_count) as avg_views,
+  MAX(p.created_at) as last_post_date
+FROM users u
+LEFT JOIN posts p ON u.id = p.user_id
+GROUP BY u.id, u.name;
+
+-- Refresh when needed
+REFRESH MATERIALIZED VIEW user_stats;
+`}</CodeBlock>
+
+<Quote>
+  "Premature optimization is the root of all evil, but knowing how to optimize
+  when needed is the root of all good performance."
+</Quote>
+
+## Monitoring and Maintenance
+
+### 1. Query Performance Monitoring
+
+<CodeBlock lang="sql">{`
+-- Enable query logging for slow queries
+ALTER SYSTEM SET log_min_duration_statement = 1000; -- Log queries > 1s
+SELECT pg_reload_conf();
+
+-- Monitor with pg_stat_statements
+SELECT
+query,
+calls,
+total_time,
+mean_time,
+rows
+FROM pg_stat_statements
+ORDER BY total_time DESC
+LIMIT 10;
+`}</CodeBlock>
+
+### 2. Regular Maintenance
+
+<Callout variant="success">
+  Regular maintenance keeps your database performing optimally.
+</Callout>
+
+<CodeBlock lang="sql">{`
+-- Update table statistics
+ANALYZE;
+
+-- Reclaim space and update statistics
+VACUUM ANALYZE;
+
+-- For heavily updated tables
+REINDEX INDEX idx_posts_status_created;
+`}</CodeBlock>
+
+## Conclusion
+
+PostgreSQL optimization is an ongoing process. Start with proper indexing, write efficient queries, and monitor performance regularly. Remember:
+
+1. **Measure first** - Use EXPLAIN ANALYZE
+2. **Index strategically** - Don't over-index
+3. **Write efficient queries** - Avoid N+1 problems
+4. **Monitor continuously** - Track slow queries
+5. **Maintain regularly** - VACUUM and ANALYZE
+
+---
+
+<ShareButton />
+
+_Want to learn more about database optimization? Check out our posts on database design patterns and scaling strategies._

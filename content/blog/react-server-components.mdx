@@ -1,0 +1,88 @@
+---
+title: Understanding React Server Components
+slug: react-server-components
+releaseDate: 2025-07-05
+tags: ["react", "nextjs", "javascript"]
+imageUrl: /images/blog/rsc-cover.png
+---
+
+# Understanding React Server Components
+
+<DateText date="2025-07-05" />
+
+<Callout variant="info">
+  React Server Components are a powerful new paradigm that allows React
+  components to be rendered on the server, offering significant performance
+  improvements and better user experiences.
+</Callout>
+
+## What are React Server Components?
+
+React Server Components (RSCs) represent a fundamental shift in how we think about React applications. Unlike traditional React components that run on the client, Server Components execute on the server and stream their output to the client.
+
+## Key Benefits
+
+### 1. Zero Bundle Size Impact
+
+Server Components don't add to your JavaScript bundle since they run on the server. This means:
+
+- Faster initial page loads
+- Reduced client-side JavaScript
+- Better performance on low-end devices
+
+### 2. Direct Database Access
+
+<CodeBlock lang="tsx">{`
+// This runs on the server
+async function UserProfile({ userId }: { userId: string }) {
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    include: { posts: true }
+  });
+
+return (
+
+<div>
+<h1>{user.name}</h1>
+<PostList posts={user.posts} />
+</div>
+);
+}
+`}</CodeBlock>
+
+### 3. Automatic Code Splitting
+
+Server Components automatically split your code at the component boundary, loading only what's needed.
+
+<Quote>
+  "React Server Components allow us to combine the rich interactivity of
+  client-side apps with the improved performance of traditional server
+  rendering."
+</Quote>
+
+## How They Work
+
+Server Components work by:
+
+1. **Rendering on the server** during the request
+2. **Serializing the output** into a special format
+3. **Streaming to the client** for immediate display
+4. **Hydrating interactive parts** on the client
+
+<Callout variant="warning">
+  Remember that Server Components cannot use browser-only APIs or handle user
+  interactions directly. Use Client Components for interactive elements.
+</Callout>
+
+## Best Practices
+
+- Use Server Components for data fetching and static content
+- Use Client Components for interactivity and browser APIs
+- Keep the component tree as server-heavy as possible
+- Move client components to the leaves of your component tree
+
+---
+
+<ShareButton />
+
+_Want to learn more about modern React patterns? Check out our other posts on Next.js and TypeScript best practices._

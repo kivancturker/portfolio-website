@@ -1,6 +1,4 @@
-import { Header } from "@/components/Header";
 import { TechStackCard } from "@/components/TechStackCard";
-import { Footer } from "@/components/Footer";
 import { SocialButton } from "@/components/SocialButton";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -15,7 +13,6 @@ import { techStack, socialLinks } from "@/data";
 export default function Home() {
   return (
     <>
-      <Header />
       <main className="mx-4 md:mx-[var(--common-margin)]">
         {/* Hero Section */}
         <section
@@ -158,7 +155,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
