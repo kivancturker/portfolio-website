@@ -4,11 +4,11 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import { getPost, getRawPost } from "@/lib/posts";
 import { getMDXComponents } from "@/lib/mdx-components";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
+type BlogPostProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: BlogPostProps) {
   const { slug } = await params;
   const post = await getPost(slug);
 
@@ -28,7 +28,7 @@ export async function generateMetadata({
   };
 }
 
-async function Page({ params }: { params: { slug: string } }) {
+async function Page({ params }: BlogPostProps) {
   const { slug } = await params;
   const rawPost = await getRawPost(slug);
   if (!rawPost) return notFound();
