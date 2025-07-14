@@ -30,6 +30,15 @@ export async function getAllPosts(): Promise<BlogContent[]> {
   }
 }
 
+export async function getRawPost(slug: string): Promise<string | null> {
+  try {
+    const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
+    return await fs.readFile(filePath, "utf8");
+  } catch {
+    return null;
+  }
+}
+
 export async function getPost(slug: string): Promise<{
   content: string;
   frontmatter: BlogContent;
