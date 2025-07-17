@@ -24,22 +24,6 @@ function BlogPost({ content }: { content: BlogContent }) {
     <li>
       <Card className="p-4">
         <div className="flex gap-4 items-center">
-          <div
-            id="img-container"
-            className="min-w-24 min-h-24 rounded-lg overflow-hidden bg-secondary flex items-center justify-center"
-          >
-            {content.imageUrl ? (
-              <Image
-                src={content.imageUrl}
-                alt={content.title}
-                width={96}
-                height={96}
-                className="object-cover w-full h-full"
-              />
-            ) : (
-              <div className="text-muted-foreground text-sm">No image</div>
-            )}
-          </div>
           <div>
             <Link
               href={`/blog/${content.slug}`}
