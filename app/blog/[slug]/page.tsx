@@ -61,7 +61,9 @@ async function Page({ params }: BlogPostProps) {
             ))}
           </div>
         </div>
-        <div className="prose prose-lg dark:prose-invert">{content}</div>
+        <div className="prose prose-lg dark:prose-invert max-w-none">
+          {content}
+        </div>
       </article>
     </div>
   );
