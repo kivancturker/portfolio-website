@@ -1,9 +1,9 @@
 import type { MDXComponents } from "mdx/types";
-import { CodeBlock } from "@/components/blog/CodeBlock";
-import { Callout } from "@/components/blog/Callout";
-import { Quote } from "@/components/blog/Quote";
-import { ShareButton } from "@/components/blog/ShareButton";
-import { DateText } from "@/components/blog/DateText";
+import { CodeBlock } from "@/components/mdx/CodeBlock";
+import { Callout } from "@/components/mdx/Callout";
+import { Quote } from "@/components/mdx/Quote";
+import { ShareButton } from "@/components/mdx/ShareButton";
+import { DateText } from "@/components/mdx/DateText";
 
 export function getMDXComponents(components: MDXComponents): MDXComponents {
   return {

@@ -1,3 +1,4 @@
-export type { TechStackItem } from "./tech";
-export type { BlogContent } from "./blog";
-export type { LoadingSpinnerProps } from "./loading-spinner-props";
+export * from "./blog";
+export * from "./loading-spinner-props";
+export * from "./tech";
+export * from "./project";
