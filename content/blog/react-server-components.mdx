@@ -35,16 +35,16 @@ Server Components don't add to your JavaScript bundle since they run on the serv
 <CodeBlock lang="tsx">{`
 // This runs on the server
 async function UserProfile({ userId }: { userId: string }) {
-  const user = await db.user.findUnique({
-    where: { id: userId },
-    include: { posts: true }
-  });
+    const user = await db.user.findUnique({
+        where: { id: userId },
+        include: { posts: true }
+});
 
 return (
 
 <div>
-<h1>{user.name}</h1>
-<PostList posts={user.posts} />
+    <h1>{user.name}</h1>
+    <PostList posts={user.posts} />
 </div>
 );
 }

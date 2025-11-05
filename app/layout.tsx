@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+// import { Header } from "@/components/Header";
+// import { Footer } from "@/components/Footer";
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -29,9 +29,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="min-h-screen flex flex-col">
-            <Header />
+            {/* <Header /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </ThemeProvider>
       </body>

@@ -1,0 +1,287 @@
+---
+title: "Mobile-First Progressive Web App"
+releaseDate: "2024-09-20"
+slug: "mobile-pwa"
+tags: ["pwa", "react", "service-worker", "responsive", "performance"]
+---
+
+# Mobile-First Progressive Web App
+
+A high-performance Progressive Web Application built with mobile-first principles, delivering native app-like experiences across all devices with exceptional performance and offline capabilities.
+
+## Project Overview
+
+<Callout type="success">
+  Created a PWA that achieves 100/100 Lighthouse scores across all categories
+  while providing seamless offline functionality and native app features.
+</Callout>
+
+## Technical Architecture
+
+### Core Technologies
+
+- **React 18** with Concurrent Features for optimal performance
+- **Workbox** for advanced service worker management
+- **IndexedDB** for offline data persistence
+- **Web App Manifest** for native app-like installation
+- **Push API** for real-time notifications
+
+### Performance Stack
+
+- **Vite** for lightning-fast development and builds
+- **Code Splitting** for optimal bundle sizes
+- **Image Optimization** with WebP and AVIF formats
+- **Critical CSS** inlining for faster initial renders
+
+## Progressive Web App Features
+
+### Service Worker Implementation
+
+```javascript
+// Advanced service worker with offline-first strategy
+import { precacheAndRoute, cleanupOutdatedCaches } from "workbox-precaching";
+import { registerRoute } from "workbox-routing";
+import {
+  CacheFirst,
+  NetworkFirst,
+  StaleWhileRevalidate,
+} from "workbox-strategies";
+
+// Precache static assets
+precacheAndRoute(self.__WB_MANIFEST);
+cleanupOutdatedCaches();
+
+// Cache strategies for different content types
+registerRoute(
+  ({ request }) => request.destination === "image",
+  new CacheFirst({
+    cacheName: "images",
+    plugins: [
+      {
+        cacheKeyWillBeUsed: async ({ request }) => {
+          return `${request.url}?version=1`;
+        },
+      },
+    ],
+  })
+);
+
+registerRoute(
+  ({ url }) => url.pathname.startsWith("/api/"),
+  new NetworkFirst({
+    cacheName: "api-cache",
+    networkTimeoutSeconds: 3,
+    plugins: [
+      {
+        cacheWillUpdate: async ({ response }) => {
+          return response.status === 200 ? response : null;
+        },
+      },
+    ],
+  })
+);
+```
+
+### Offline-First Design
+
+- **Data Synchronization**: Automatic sync when connection is restored
+- **Conflict Resolution**: Smart merging of offline and online changes
+- **Background Sync**: Queue actions for execution when online
+- **Cache Management**: Intelligent cache invalidation and updates
+
+## Mobile-First Implementation
+
+### Responsive Design
+
+<CodeBlock lang="css">
+/* Mobile-first CSS with progressive enhancement */
+.container {
+  /* Mobile base styles */
+  padding: 1rem;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/_ Tablet enhancement _/
+@media (min-width: 768px) {
+.container {
+padding: 2rem;
+font-size: 18px;
+max-width: 768px;
+margin: 0 auto;
+}
+}
+
+/_ Desktop enhancement _/
+@media (min-width: 1024px) {
+.container {
+padding: 3rem;
+max-width: 1200px;
+display: grid;
+grid-template-columns: 1fr 300px;
+gap: 2rem;
+}
+}
+
+</CodeBlock>
+
+### Touch Interactions
+
+- **Gesture Support**: Swipe, pinch, and tap interactions
+- **Touch Targets**: Minimum 44px for accessibility
+- **Haptic Feedback**: Native-like tactile responses
+- **Scroll Optimization**: Smooth scrolling with momentum
+
+## Performance Optimizations
+
+### Code Splitting Strategy
+
+```javascript
+// Route-based code splitting with React.lazy
+import { lazy, Suspense } from "react";
+
+const HomePage = lazy(() => import("./pages/HomePage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const UserProfile = lazy(() => import("./pages/UserProfile"));
+
+function App() {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/profile" element={<UserProfile />} />
+      </Routes>
+    </Suspense>
+  );
+}
+```
+
+### Image Optimization
+
+- **Next-gen Formats**: WebP and AVIF with fallbacks
+- **Responsive Images**: Multiple resolutions for different screens
+- **Lazy Loading**: Intersection Observer for progressive loading
+- **Compression**: 80% file size reduction without quality loss
+
+### Bundle Optimization
+
+- **Tree Shaking**: Eliminated unused code (40% bundle reduction)
+- **Module Federation**: Shared dependencies across micro-frontends
+- **Preloading**: Critical resources loaded in advance
+- **Service Worker Precaching**: Instant subsequent page loads
+
+## Native App Features
+
+### Installation & App Shell
+
+```json
+// Web App Manifest configuration
+{
+  "name": "Mobile-First PWA",
+  "short_name": "MF-PWA",
+  "description": "High-performance mobile-first application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
+
+### Push Notifications
+
+<CodeBlock lang="javascript">
+// Push notification implementation
+async function subscribeToPush() {
+  const registration = await navigator.serviceWorker.ready;
+  
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+  });
+
+// Send subscription to server
+await fetch('/api/push-subscribe', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(subscription)
+});
+}
+
+// Service worker push event handler
+self.addEventListener('push', event => {
+const data = event.data.json();
+
+const options = {
+body: data.body,
+icon: '/icons/notification-icon.png',
+badge: '/icons/badge.png',
+vibrate: [200, 100, 200],
+data: data.url,
+actions: [{
+action: 'view',
+title: 'View Details'
+}]
+};
+
+event.waitUntil(
+self.registration.showNotification(data.title, options)
+);
+});
+
+```
+
+## Accessibility & Inclusion
+
+### WCAG Compliance
+- **Screen Reader Support**: Full ARIA implementation
+- **Keyboard Navigation**: Tab order and focus management
+- **Color Contrast**: WCAG AA compliance (4.5:1 ratio)
+- **Motion Preferences**: Respects `prefers-reduced-motion`
+
+### Internationalization
+- **Multi-language Support**: Dynamic locale switching
+- **RTL Layout Support**: Arabic and Hebrew compatibility
+- **Currency & Date Formatting**: Locale-specific formatting
+- **Cultural Adaptations**: Region-specific UI patterns
+
+## Performance Results
+
+<Quote>
+"Achieved perfect Lighthouse scores while delivering native app performance with 60fps animations and sub-second page loads."
+</Quote>
+
+### Lighthouse Scores
+- **Performance**: 100/100
+- **Accessibility**: 100/100
+- **Best Practices**: 100/100
+- **SEO**: 100/100
+- **PWA**: ✅ All criteria met
+
+### Key Metrics
+- **First Contentful Paint**: 0.8s
+- **Largest Contentful Paint**: 1.2s
+- **Cumulative Layout Shift**: 0.02
+- **Time to Interactive**: 1.5s
+- **Bundle Size**: 45KB gzipped
+
+### User Experience Impact
+- **Load Time**: 70% faster than competitor apps
+- **Engagement**: 40% increase in session duration
+- **Conversion**: 25% improvement in mobile conversions
+- **Retention**: 60% higher user retention rate
+```

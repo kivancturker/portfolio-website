@@ -1,4 +1,4 @@
-export type BlogContent = {
+export type ProjectContent = {
   title: string;
   releaseDate: string;
   slug: string;

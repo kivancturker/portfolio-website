@@ -12,10 +12,11 @@ export function CodeBlock({
     <SyntaxHighlighter
       language={lang}
       style={oneDark}
-      PreTag="div"
+      PreTag="pre"
+      showLineNumbers={true}
       className="rounded-md !bg-gray-900 dark:!bg-gray-800"
     >
-      {children.trim()}
+      {children}
     </SyntaxHighlighter>
   );
 }

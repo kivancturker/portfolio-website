@@ -1,37 +1,37 @@
 import { notFound } from "next/navigation";
 import React from "react";
 import { compileMDX } from "next-mdx-remote/rsc";
-import { getPost, getRawPost } from "@/lib/posts";
+import { getProject, getRawProject } from "@/lib/projects";
 import { getMDXComponents } from "@/lib/mdx-components";
 
-type BlogPostProps = {
+type ProjectPostProps = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: BlogPostProps) {
+export async function generateMetadata({ params }: ProjectPostProps) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const project = await getProject(slug);
 
-  if (!post) {
+  if (!project) {
     return {
-      title: "Post Not Found | Kivanc Turker",
-      description: "Post not found",
+      title: "Project Not Found | Kivanc Turker",
+      description: "Project not found",
     };
   }
 
   return {
-    title: post.frontmatter.title + " | Kivanc Turker",
+    title: project.frontmatter.title + " | Kivanc Turker",
     description:
-      post.frontmatter.title +
-      " - Published on " +
-      post.frontmatter.releaseDate,
+      project.frontmatter.title +
+      " - Completed on " +
+      project.frontmatter.releaseDate,
   };
 }
 
-async function Page({ params }: BlogPostProps) {
+async function Page({ params }: ProjectPostProps) {
   const { slug } = await params;
-  const rawPost = await getRawPost(slug);
-  if (!rawPost) return notFound();
+  const rawProject = await getRawProject(slug);
+  if (!rawProject) return notFound();
 
   const components = getMDXComponents({});
 
@@ -40,7 +40,7 @@ async function Page({ params }: BlogPostProps) {
     releaseDate: string;
     tags: string[];
   }>({
-    source: rawPost,
+    source: rawProject,
     options: { parseFrontmatter: true },
     components,
   });
