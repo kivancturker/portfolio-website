@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { BlogContent } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { blogs } from "@/data";
